@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { stats } from '../../../data/stats';
+import { stats } from '../../../data/Stats';
 
 export function StatsInputs() {
   // Initialize state for all stats, default value 0
