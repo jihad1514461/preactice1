@@ -1,17 +1,57 @@
-import { ElementsInputs } from "../ElementInputs";
-export function ElementTab() {
+import React from 'react';
+import { AbilityElements } from '../../../../features/abilities/types';
+import { ElementsInputs } from '../sharedInputs';
+
+interface ElementTabProps {
+  initialData: AbilityElements;
+  onDataChange: (data: AbilityElements) => void;
+}
+
+export const ElementTab: React.FC<ElementTabProps> = ({
+  initialData,
+  onDataChange
+}) => {
+  const handleMasteryChange = (newValues: Record<string, number>) => {
+    onDataChange({ ...initialData, mastery: newValues });
+  };
+
+  const handleResistanceChange = (newValues: Record<string, number>) => {
+    onDataChange({ ...initialData, resistance: newValues });
+  };
+
+  const handleReqMasteryChange = (newValues: Record<string, number>) => {
+    onDataChange({ ...initialData, requirementMastery: newValues });
+  };
+
+  const handleReqResistanceChange = (newValues: Record<string, number>) => {
+    onDataChange({ ...initialData, requirementResistance: newValues });
+  };
+
   return (
-    <div>
-      <h1>Elements</h1>
-      <h1> Mastary</h1>
-      <ElementsInputs />
-      <h1> Requirnments</h1>
-      <ElementsInputs />
-      <h1> Requirnments</h1>
-      <h1> Mastary</h1>
-      <ElementsInputs />
-      <h1> Requirnments</h1>
-      <ElementsInputs />
+    <div className="space-y-8">
+      <ElementsInputs
+        title="Mastery"
+        initialValues={initialData.mastery}
+        onValuesChange={handleMasteryChange}
+      />
+      
+      <ElementsInputs
+        title="Resistance"
+        initialValues={initialData.resistance}
+        onValuesChange={handleResistanceChange}
+      />
+      
+      <ElementsInputs
+        title="Requirement Mastery"
+        initialValues={initialData.requirementMastery}
+        onValuesChange={handleReqMasteryChange}
+      />
+      
+      <ElementsInputs
+        title="Requirement Resistance"
+        initialValues={initialData.requirementResistance}
+        onValuesChange={handleReqResistanceChange}
+      />
     </div>
   );
-}
+};

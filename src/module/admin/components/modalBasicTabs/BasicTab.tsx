@@ -1,66 +1,63 @@
-import { useState } from 'react';
+import React from 'react';
+import { Input } from '../../../../components/ui/atoms';
+import { AbilityBasic } from '../../../../features/abilities/types';
 
-export function BasicTab() {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState<File | null>(null);
+interface BasicTabProps {
+  initialData: AbilityBasic;
+  onDataChange: (data: AbilityBasic) => void;
+}
+
+export const BasicTab: React.FC<BasicTabProps> = ({
+  initialData,
+  onDataChange
+}) => {
+  const handleChange = (field: keyof AbilityBasic, value: string | File | null) => {
+    onDataChange({ ...initialData, [field]: value });
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
+    const file = e.target.files?.[0] || null;
+    handleChange('image', file);
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded shadow space-y-4">
-      <h1 className="text-2xl font-bold">Basic Information</h1>
+    <div className="space-y-6">
+      <Input
+        label="Name"
+        value={initialData.name}
+        onChange={(e) => handleChange('name', e.target.value)}
+        placeholder="Enter name"
+      />
 
-      {/* Name Input */}
-      <div className="flex flex-col">
-        <label htmlFor="name" className="font-semibold mb-1">
-          Name
-        </label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter name"
-          className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-      </div>
-
-      {/* Description Input */}
-      <div className="flex flex-col">
-        <label htmlFor="description" className="font-semibold mb-1">
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Description
         </label>
         <textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={initialData.description}
+          onChange={(e) => handleChange('description', e.target.value)}
           placeholder="Enter description"
-          className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           rows={4}
         />
       </div>
 
-      {/* Image Input */}
-      <div className="flex flex-col">
-        <label htmlFor="image" className="font-semibold mb-1">
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Image
         </label>
         <input
-          id="image"
           type="file"
           accept="image/*"
           onChange={handleImageChange}
-          className="border rounded px-3 py-2"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800"
         />
-        {image && (
-          <p className="mt-2 text-sm text-gray-600">Selected: {image.name}</p>
+        {initialData.image && (
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Selected: {initialData.image.name}
+          </p>
         )}
       </div>
     </div>
   );
-}
+};

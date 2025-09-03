@@ -11,7 +11,7 @@ export * from './dashboard/DashboardPage';
 export * from './components/dashboard'
 export * from './ui-showcase/UIShowcasePage'
 export * from './abilityManagement/AbilityManagemetPage'
-export * from './components/modalBasicTabs/CoreModal';
-export * from './components/modalBasicTabs/BasicTab';
-export * from './components/modalBasicTabs/ElementTab';
-export * from './components/modalBasicTabs/StatTab';
+export * from './components/modalBasicTabs';
+export * from './components/reusableModal';
+export * from './components/sharedInputs';
+export * from './abilityManagement';
